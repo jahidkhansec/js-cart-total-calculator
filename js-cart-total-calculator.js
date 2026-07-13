@@ -1,19 +1,34 @@
-function calculateSubtotal(items){
-  return subtotal
+function calculateSubtotal(items) {
+  let subtotal = 0;
+
+  for (const item of items) {
+    subtotal += item.price * item.quantity;
+  }
+
+  return subtotal;
 }
 
 function calculateDiscount(subtotal, discountPercent) {
-  const discountPercent = subtotal * (discountPercent/100);
-  const amountAfterDiscount = subtotal - discountPercent;
-  return discountPercent;
+  return (subtotal * discountPercent) / 100;
 }
 
 function calculateTax(amountAfterDiscount, taxPercent) {
-  const amountAfterDiscount = price - discountPercent;
+  return (amountAfterDiscount * taxPercent) / 100;
 }
 
 function createCartSummary(items, discountPercent, taxPercent) {
-  
+  const subtotal = calculateSubtotal(items);
+  const discount = calculateDiscount(subtotal, discountPercent);
+  const amountAfterDiscount = subtotal - discount;
+  const tax = calculateTax(amountAfterDiscount, taxPercent);
+  const total = amountAfterDiscount + tax;
+
+  return {
+    subtotal,
+    discount,
+    tax,
+    total,
+  };
 }
 
 const cartItems = [
@@ -27,13 +42,3 @@ console.log(calculateSubtotal(cartItems));
 
 const singleItemCart = [{ name: 'Mouse', price: 25, quantity: 2 }];
 console.log(createCartSummary(singleItemCart, 0, 10));
-
-// variables
-subtotal = 
-discount = calculateDiscount(subtotal, discountPercent)
-tax = calculateTax(amountAfterDiscount, taxPercent)
-
-//Expected output:
-{ subtotal: 60, discount: 6, tax: 2.7, total: 56.7 }
-60
-{ subtotal: 50, discount: 0, tax: 5, total: 55 }
